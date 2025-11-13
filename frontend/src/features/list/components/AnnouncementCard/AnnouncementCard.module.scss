@@ -1,0 +1,127 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.card {
+  @include card-base;
+  
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  cursor: pointer;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-sm;
+  }
+  
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: color('text-primary');
+    margin: 0;
+    flex: 1;
+  }
+  
+  &__status {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    
+    &--pending {
+      background-color: color('status-pending');
+      color: color('text-inverse');
+    }
+    
+    &--approved {
+      background-color: color('status-approved');
+      color: color('text-inverse');
+    }
+    
+    &--rejected {
+      background-color: color('status-rejected');
+      color: color('text-inverse');
+    }
+    
+    &--draft {
+      background-color: color('status-draft');
+      color: color('text-inverse');
+    }
+  }
+  
+  &__priority {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    
+    &--normal {
+      background-color: color('priority-normal');
+      color: color('text-inverse');
+    }
+    
+    &--urgent {
+      background-color: color('priority-urgent');
+      color: color('text-inverse');
+    }
+  }
+  
+  &__description {
+    color: color('text-secondary');
+    font-size: $font-size-base;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  &__price {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: color('text-primary');
+  }
+  
+  &__category {
+    color: color('text-muted');
+    font-size: $font-size-sm;
+  }
+  
+  &__images {
+    display: flex;
+    gap: $spacing-sm;
+    overflow-x: auto;
+    @include custom-scrollbar;
+    
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: $border-radius-md;
+      border: 1px solid color('border-color');
+    }
+  }
+  
+  &__seller {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding-top: $spacing-sm;
+    border-top: 1px solid color('border-color');
+    
+    &-name {
+      color: color('text-secondary');
+      font-size: $font-size-sm;
+    }
+    
+    &-rating {
+      color: color('text-muted');
+      font-size: $font-size-xs;
+    }
+  }
+}
+

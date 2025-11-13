@@ -1,0 +1,65 @@
+@use './styles/variables' as *;
+@use './styles/theme';
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: $font-weight-normal;
+
+  color-scheme: light dark;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color $transition-base, color $transition-base;
+}
+
+a {
+  font-weight: $font-weight-medium;
+  color: var(--color-primary);
+  text-decoration: inherit;
+  
+  &:hover {
+    color: var(--color-primary-hover);
+  }
+}
+
+button {
+  border-radius: $border-radius-md;
+  border: 1px solid transparent;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  font-family: inherit;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all $transition-base;
+  
+  &:hover {
+    border-color: var(--border-color-hover);
+  }
+  
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+

@@ -1,0 +1,96 @@
+@use './variables' as *;
+
+@mixin apply-theme($theme-name) {
+  @if $theme-name == 'dark' {
+    @include theme('dark');
+  } @else {
+    @include theme('light');
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (min-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == 'sm' {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
+  }
+}
+
+@mixin hover-effect {
+  transition: all $transition-base ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px color('shadow-md');
+  }
+}
+
+@mixin button-base {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-base ease-in-out;
+  border: 1px solid transparent;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin card-base {
+  background-color: color('bg-primary');
+  border: 1px solid color('border-color');
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: 0 2px 4px color('shadow-sm');
+  transition: all $transition-base ease-in-out;
+  
+  &:hover {
+    box-shadow: 0 4px 8px color('shadow-md');
+    border-color: color('border-color-hover');
+  }
+}
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: color('bg-secondary');
+    border-radius: $border-radius-sm;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: color('border-color');
+    border-radius: $border-radius-sm;
+    
+    &:hover {
+      background: color('border-color-hover');
+    }
+  }
+}
+

@@ -1,10 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Announcement, ListState } from "./type";
 
-export interface ListState {
-  items: any[];
-  loading: boolean;
-  error: string | null;
-}
+
 
 const initialState: ListState = {
   items: [],
@@ -16,7 +13,7 @@ export const listSlice = createSlice({
   name: 'list',
   initialState,
   reducers: {
-    setList: (state, action: PayloadAction<any[]>) => {
+    setList: (state, action: PayloadAction<Announcement[]>) => {
       state.items = action.payload;
       state.loading = false;
       state.error = null;

@@ -1,0 +1,13 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  text-align: center;
+  background-color: color('bg-primary');
+  color: color('text-primary');
+  min-height: 100vh;
+}
+

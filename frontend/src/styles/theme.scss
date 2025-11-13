@@ -1,0 +1,106 @@
+@use './variables' as *;
+
+:root {
+  --color-primary: #{theme-color($light-theme, 'primary')};
+  --color-primary-hover: #{theme-color($light-theme, 'primary-hover')};
+  --color-secondary: #{theme-color($light-theme, 'secondary')};
+  --color-success: #{theme-color($light-theme, 'success')};
+  --color-danger: #{theme-color($light-theme, 'danger')};
+  --color-warning: #{theme-color($light-theme, 'warning')};
+  --color-info: #{theme-color($light-theme, 'info')};
+  
+  --bg-primary: #{theme-color($light-theme, 'bg-primary')};
+  --bg-secondary: #{theme-color($light-theme, 'bg-secondary')};
+  --bg-tertiary: #{theme-color($light-theme, 'bg-tertiary')};
+  
+  --text-primary: #{theme-color($light-theme, 'text-primary')};
+  --text-secondary: #{theme-color($light-theme, 'text-secondary')};
+  --text-muted: #{theme-color($light-theme, 'text-muted')};
+  --text-inverse: #{theme-color($light-theme, 'text-inverse')};
+  
+  --border-color: #{theme-color($light-theme, 'border-color')};
+  --border-color-hover: #{theme-color($light-theme, 'border-color-hover')};
+  
+  --shadow-sm: #{theme-color($light-theme, 'shadow-sm')};
+  --shadow-md: #{theme-color($light-theme, 'shadow-md')};
+  --shadow-lg: #{theme-color($light-theme, 'shadow-lg')};
+  
+  --status-pending: #{theme-color($light-theme, 'status-pending')};
+  --status-approved: #{theme-color($light-theme, 'status-approved')};
+  --status-rejected: #{theme-color($light-theme, 'status-rejected')};
+  --status-draft: #{theme-color($light-theme, 'status-draft')};
+  
+  --priority-normal: #{theme-color($light-theme, 'priority-normal')};
+  --priority-urgent: #{theme-color($light-theme, 'priority-urgent')};
+}
+
+[data-theme='dark'] {
+  --color-primary: #{theme-color($dark-theme, 'primary')};
+  --color-primary-hover: #{theme-color($dark-theme, 'primary-hover')};
+  --color-secondary: #{theme-color($dark-theme, 'secondary')};
+  --color-success: #{theme-color($dark-theme, 'success')};
+  --color-danger: #{theme-color($dark-theme, 'danger')};
+  --color-warning: #{theme-color($dark-theme, 'warning')};
+  --color-info: #{theme-color($dark-theme, 'info')};
+  
+  --bg-primary: #{theme-color($dark-theme, 'bg-primary')};
+  --bg-secondary: #{theme-color($dark-theme, 'bg-secondary')};
+  --bg-tertiary: #{theme-color($dark-theme, 'bg-tertiary')};
+  
+  --text-primary: #{theme-color($dark-theme, 'text-primary')};
+  --text-secondary: #{theme-color($dark-theme, 'text-secondary')};
+  --text-muted: #{theme-color($dark-theme, 'text-muted')};
+  --text-inverse: #{theme-color($dark-theme, 'text-inverse')};
+  
+  --border-color: #{theme-color($dark-theme, 'border-color')};
+  --border-color-hover: #{theme-color($dark-theme, 'border-color-hover')};
+  
+  --shadow-sm: #{theme-color($dark-theme, 'shadow-sm')};
+  --shadow-md: #{theme-color($dark-theme, 'shadow-md')};
+  --shadow-lg: #{theme-color($dark-theme, 'shadow-lg')};
+  
+  --status-pending: #{theme-color($dark-theme, 'status-pending')};
+  --status-approved: #{theme-color($dark-theme, 'status-approved')};
+  --status-rejected: #{theme-color($dark-theme, 'status-rejected')};
+  --status-draft: #{theme-color($dark-theme, 'status-draft')};
+  
+  --priority-normal: #{theme-color($dark-theme, 'priority-normal')};
+  --priority-urgent: #{theme-color($dark-theme, 'priority-urgent')};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-primary: #{theme-color($dark-theme, 'primary')};
+    --color-primary-hover: #{theme-color($dark-theme, 'primary-hover')};
+    --color-secondary: #{theme-color($dark-theme, 'secondary')};
+    --color-success: #{theme-color($dark-theme, 'success')};
+    --color-danger: #{theme-color($dark-theme, 'danger')};
+    --color-warning: #{theme-color($dark-theme, 'warning')};
+    --color-info: #{theme-color($dark-theme, 'info')};
+    
+    --bg-primary: #{theme-color($dark-theme, 'bg-primary')};
+    --bg-secondary: #{theme-color($dark-theme, 'bg-secondary')};
+    --bg-tertiary: #{theme-color($dark-theme, 'bg-tertiary')};
+    
+    --text-primary: #{theme-color($dark-theme, 'text-primary')};
+    --text-secondary: #{theme-color($dark-theme, 'text-secondary')};
+    --text-muted: #{theme-color($dark-theme, 'text-muted')};
+    --text-inverse: #{theme-color($dark-theme, 'text-inverse')};
+    
+    --border-color: #{theme-color($dark-theme, 'border-color')};
+    --border-color-hover: #{theme-color($dark-theme, 'border-color-hover')};
+    
+    --shadow-sm: #{theme-color($dark-theme, 'shadow-sm')};
+    --shadow-md: #{theme-color($dark-theme, 'shadow-md')};
+    --shadow-lg: #{theme-color($dark-theme, 'shadow-lg')};
+    
+    --status-pending: #{theme-color($dark-theme, 'status-pending')};
+    --status-approved: #{theme-color($dark-theme, 'status-approved')};
+    --status-rejected: #{theme-color($dark-theme, 'status-rejected')};
+    --status-draft: #{theme-color($dark-theme, 'status-draft')};
+    
+    --priority-normal: #{theme-color($dark-theme, 'priority-normal')};
+    --priority-urgent: #{theme-color($dark-theme, 'priority-urgent')};
+  }
+}
+
