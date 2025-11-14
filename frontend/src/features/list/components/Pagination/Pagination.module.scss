@@ -1,0 +1,199 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl) 0;
+  margin-top: var(--spacing-xl);
+  border-top: 2px solid var(--border-color);
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    background: var(--color-surface);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 8px var(--shadow-sm);
+    
+    &:hover:not(:disabled) {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none;
+    }
+
+    &--first,
+    &--prev,
+    &--next,
+    &--last {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+    }
+
+    &--first {
+      &::before {
+        content: '⟪';
+      }
+    }
+
+    &--prev {
+      &::before {
+        content: '❮';
+      }
+    }
+
+    &--next {
+      &::after {
+        content: '❯';
+      }
+    }
+
+    &--last {
+      &::after {
+        content: '⟫';
+      }
+    }
+
+    &--active {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+      color: white;
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 16px rgba(0, 123, 255, 0.4);
+      transform: scale(1.1);
+      
+      &:hover {
+        transform: scale(1.1) translateY(-3px);
+      }
+    }
+  }
+
+  &__pageNumbers {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  &__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-muted);
+    user-select: none;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-align: center;
+  }
+
+  &__summary {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    
+    strong {
+      font-weight: var(--font-weight-bold);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-info));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__pages {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    padding: var(--spacing-lg) 0;
+    gap: var(--spacing-md);
+    
+    &__button {
+      min-width: 40px;
+      height: 40px;
+      font-size: var(--font-size-sm);
+      padding: 0 var(--spacing-sm);
+    }
+    
+    &__summary {
+      font-size: var(--font-size-sm);
+    }
+    
+    &__pages {
+      font-size: var(--font-size-xs);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    &__controls {
+      gap: 4px;
+    }
+    
+    &__button {
+      min-width: 36px;
+      height: 36px;
+      font-size: 0.75rem;
+      
+      &--first,
+      &--last {
+        display: none; // Hide first/last on very small screens
+      }
+    }
+    
+    &__pageNumbers {
+      gap: 4px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination {
+    &__button {
+      transition: none;
+    }
+  }
+}

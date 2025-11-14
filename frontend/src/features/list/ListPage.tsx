@@ -1,59 +1,95 @@
-import React, { useState } from 'react';
+import type { FC } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useGetAnnouncementsQuery } from './services';
-// import AnnouncementCard from './components/AnnouncementCard';
-// import Filters from './components/Filters';
-// import Pagination from './components/Pagination';
+import { useDebounce } from '@/hooks/useDebounce';
+import { setPage, resetFilters, selectFilters } from './slice';
+import AnnouncementCard from './components/AnnouncementCard/AnnouncementCard';
+import Filters from './components/Filters/Filters';
+import Pagination from './components/Pagination/Pagination';
 import styles from './list.module.scss';
 
-const ListPage: React.FC = () => {
-  const [page] = useState(1);
-  const [limit] = useState(10);
-  const [status] = useState<'pending' | 'approved' | 'rejected' | undefined>(undefined);
-  const [categoryId] = useState<number | undefined>(undefined);
-  const [priority] = useState<'normal' | 'urgent' | undefined>(undefined);
+const ListPage: FC = () => {
+  const dispatch = useAppDispatch();
+  const filters = useAppSelector(selectFilters);
+  
+  const debouncedSearch = useDebounce(filters.search, 300);
 
-  const { data, isLoading, error } = useGetAnnouncementsQuery({
-    page,
-    limit,
-    status,
-    categoryId,
-    priority,
+  const { data, isLoading, error, isFetching } = useGetAnnouncementsQuery({
+    page: filters.page,
+    limit: filters.limit,
+    status: filters.statuses.length > 0 ? filters.statuses : undefined,
+    categoryId: filters.categoryId,
+    priority: filters.priority,
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
+    search: debouncedSearch,
+    sortBy: filters.sortBy,
+    sortOrder: filters.sortOrder,
   });
 
   const announcements = data?.ads ?? [];
+  const pagination = data?.pagination;
 
   return (
     <div className={styles.container}>
-      <h1>Список объявлений</h1>
-      {/* <Filters 
-        status={status}
-        category={category}
-        priority={priority}
-        onStatusChange={setStatus}
-        onCategoryChange={setCategory}
-        onPriorityChange={setPriority}
-      /> */}
-      <div className={styles.cards}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Модерация объявлений</h1>
+        <p className={styles.subtitle}>
+          Управление и модерация объявлений на платформе
+        </p>
+      </header>
+
+      <Filters />
+
+      {isFetching && !isLoading && (
+        <div className={styles.fetchingIndicator}>
+          Обновление данных...
+        </div>
+      )}
+
+      <div className={styles.content}>
         {isLoading ? (
-          <p>Загрузка...</p>
+          <div className={styles.loading}>
+            <div className={styles.spinner}></div>
+            <p>Загрузка объявлений...</p>
+          </div>
         ) : error ? (
-          <p>Ошибка загрузки данных</p>
+          <div className={styles.error}>
+            <p>❌ Ошибка при загрузке данных</p>
+            <p className={styles.errorDetails}>
+              Попробуйте обновить страницу или проверьте подключение к серверу
+            </p>
+          </div>
         ) : announcements.length === 0 ? (
-          <p>Объявления не найдены</p>
+          <div className={styles.empty}>
+            <p>📭 Объявления не найдены</p>
+            <p className={styles.emptyHint}>
+              Попробуйте изменить параметры фильтрации
+            </p>
+            <button className={styles.resetButton} onClick={() => dispatch(resetFilters())}>
+              Сбросить фильтры
+            </button>
+          </div>
         ) : (
-          announcements.map((item) => (
-            // <AnnouncementCard key={item.id} item={item} />
-            <div key={item.id}>{item.title}</div>
-          ))
+          <>
+            <div className={styles.cards}>
+              {announcements.map((item) => (
+                <AnnouncementCard key={item.id} item={item} />
+              ))}
+            </div>
+
+            {pagination && (
+              <Pagination
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                totalItems={pagination.totalItems}
+                itemsPerPage={pagination.itemsPerPage}
+                onPageChange={(page) => dispatch(setPage(page))}
+              />
+            )}
+          </>
         )}
       </div>
-      {/* <Pagination 
-        currentPage={data?.pagination?.currentPage ?? 1}
-        totalPages={data?.pagination?.totalPages ?? 0}
-        totalItems={data?.pagination?.totalItems ?? 0}
-        itemsPerPage={data?.pagination?.itemsPerPage ?? limit}
-        onPageChange={setPage}
-      /> */}
     </div>
   );
 };

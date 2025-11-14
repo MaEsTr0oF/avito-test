@@ -32,6 +32,35 @@
   
   --priority-normal: #{theme-color($light-theme, 'priority-normal')};
   --priority-urgent: #{theme-color($light-theme, 'priority-urgent')};
+  
+  --color-surface: #{theme-color($light-theme, 'bg-primary')};
+  --color-background: #{theme-color($light-theme, 'bg-secondary')};
+  --color-text-tertiary: #{theme-color($light-theme, 'text-muted')};
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
 }
 
 [data-theme='dark'] {
@@ -66,6 +95,10 @@
   
   --priority-normal: #{theme-color($dark-theme, 'priority-normal')};
   --priority-urgent: #{theme-color($dark-theme, 'priority-urgent')};
+  
+  --color-surface: #{theme-color($dark-theme, 'bg-secondary')};
+  --color-background: #{theme-color($dark-theme, 'bg-tertiary')};
+  --color-text-tertiary: #{theme-color($dark-theme, 'text-muted')};
 }
 
 @media (prefers-color-scheme: dark) {
@@ -101,6 +134,10 @@
     
     --priority-normal: #{theme-color($dark-theme, 'priority-normal')};
     --priority-urgent: #{theme-color($dark-theme, 'priority-urgent')};
+    
+    --color-surface: #{theme-color($dark-theme, 'bg-secondary')};
+    --color-background: #{theme-color($dark-theme, 'bg-tertiary')};
+    --color-text-tertiary: #{theme-color($dark-theme, 'text-muted')};
   }
 }
 

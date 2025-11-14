@@ -59,10 +59,24 @@ message: string;
 ad: Announcement;
 };
 
+type FilterState = {
+	search: string;
+	statuses: Array<'pending' | 'approved' | 'rejected' | 'draft'>;
+	categoryId: number | undefined;
+	priority: 'normal' | 'urgent' | undefined;
+	minPrice: number | undefined;
+	maxPrice: number | undefined;
+	sortBy: 'createdAt' | 'price' | 'priority';
+	sortOrder: 'asc' | 'desc';
+	page: number;
+	limit: number;
+}
+
 type ListState = {
 	items: Announcement[];
 	loading: boolean;
 	error: string | null;
- }
+	filters: FilterState;
+}
 
-export type {ListState, Announcement, Pagination, GetAnnouncementsResponse, GetAnnouncementsParams, ApproveRejectResponse };
+export type {ListState, FilterState, Announcement, Pagination, GetAnnouncementsResponse, GetAnnouncementsParams, ApproveRejectResponse };
