@@ -148,6 +148,23 @@
   font-size: var(--font-size-base);
 }
 
+.reason {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: rgba(244, 67, 54, 0.1);
+  border-left: 3px solid var(--color-error);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.reasonIcon {
+  flex-shrink: 0;
+  font-size: var(--font-size-base);
+}
+
 .empty {
   display: flex;
   flex-direction: column;

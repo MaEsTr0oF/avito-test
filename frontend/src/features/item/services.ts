@@ -27,9 +27,7 @@ export const itemApi = createApi({
       async onQueryStarted({ id, status }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           itemApi.util.updateQueryData('getAnnouncementById', id, (draft) => {
-            if (draft.ad) {
-              draft.ad.status = status;
-            }
+            draft.status = status;
           })
         );
         try {

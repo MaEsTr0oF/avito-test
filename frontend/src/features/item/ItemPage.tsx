@@ -44,7 +44,7 @@ const ItemPage = () => {
     );
   }
 
-  if (!data?.ad) {
+  if (!data) {
     return (
       <div className={styles.container}>
         <div className={styles.empty}>
@@ -57,7 +57,7 @@ const ItemPage = () => {
     );
   }
 
-  const announcement = data.ad;
+  const announcement = data;
 
   const getStatusClass = (status: string) => {
     switch (status) {

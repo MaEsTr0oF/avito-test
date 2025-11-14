@@ -34,7 +34,7 @@ const SellerInfo = ({ seller }: SellerInfoProps) => {
           
           <div className={styles.stat}>
             <div className={styles.statLabel}>На платформе</div>
-            <div className={styles.statValue}>{formatDate(seller.registrationDate)}</div>
+            <div className={styles.statValue}>{formatDate(seller.registeredAt)}</div>
           </div>
         </div>
       </div>

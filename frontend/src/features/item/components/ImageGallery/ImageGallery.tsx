@@ -73,7 +73,7 @@ const ImageGallery = ({ images, alt = 'Изображение товара' }: I
           aria-label="Предыдущее изображение"
           disabled={images.length === 1}
         >
-          ❮
+          <span className={styles.arrow}>‹</span>
         </button>
 
         <div
@@ -95,7 +95,7 @@ const ImageGallery = ({ images, alt = 'Изображение товара' }: I
           aria-label="Следующее изображение"
           disabled={images.length === 1}
         >
-          ❯
+          <span className={styles.arrow}>›</span>
         </button>
 
         {images.length > 1 && (

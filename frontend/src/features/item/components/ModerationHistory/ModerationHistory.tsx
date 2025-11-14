@@ -19,26 +19,26 @@ const ModerationHistory = ({ history }: ModerationHistoryProps) => {
     );
   }
 
-  const getDecisionLabel = (decision: string) => {
-    switch (decision) {
+  const getActionLabel = (action: string) => {
+    switch (action) {
       case 'approved':
         return 'Одобрено';
       case 'rejected':
         return 'Отклонено';
-      case 'rework':
-        return 'На доработку';
+      case 'pending':
+        return 'На проверке';
       default:
-        return decision;
+        return action;
     }
   };
 
-  const getDecisionClass = (decision: string) => {
-    switch (decision) {
+  const getActionClass = (action: string) => {
+    switch (action) {
       case 'approved':
         return styles.decision_approved;
       case 'rejected':
         return styles.decision_rejected;
-      case 'rework':
+      case 'pending':
         return styles.decision_rework;
       default:
         return '';
@@ -53,28 +53,35 @@ const ModerationHistory = ({ history }: ModerationHistoryProps) => {
         {history.map((item, index) => (
           <div key={item.id} className={styles.item}>
             <div className={styles.marker}>
-              <div className={`${styles.dot} ${getDecisionClass(item.decision)}`} />
+              <div className={`${styles.dot} ${getActionClass(item.action)}`} />
               {index !== history.length - 1 && <div className={styles.line} />}
             </div>
             
             <div className={styles.content}>
               <div className={styles.header}>
-                <span className={`${styles.decision} ${getDecisionClass(item.decision)}`}>
-                  {getDecisionLabel(item.decision)}
+                <span className={`${styles.decision} ${getActionClass(item.action)}`}>
+                  {getActionLabel(item.action)}
                 </span>
                 <span className={styles.date}>
-                  {formatDateTime(item.date)}
+                  {formatDateTime(item.timestamp)}
                 </span>
               </div>
               
               <div className={styles.moderator}>
-                Модератор: <strong>{item.moderator}</strong>
+                Модератор: <strong>{item.moderatorName}</strong>
               </div>
               
               {item.comment && (
                 <div className={styles.comment}>
                   <span className={styles.commentIcon}>💬</span>
                   {item.comment}
+                </div>
+              )}
+              
+              {item.reason && (
+                <div className={styles.reason}>
+                  <span className={styles.reasonIcon}>⚠️</span>
+                  Причина: {item.reason}
                 </div>
               )}
             </div>

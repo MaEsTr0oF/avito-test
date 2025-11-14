@@ -2,18 +2,21 @@ export type AnnouncementStatus = 'pending' | 'approved' | 'rejected' | 'draft';
 export type Priority = 'normal' | 'urgent';
 
 export interface Seller {
+  id: number;
   name: string;
-  rating: number;
+  rating: string;
   totalAds: number;
-  registrationDate: string;
+  registeredAt: string;
 }
 
 export interface ModerationHistoryItem {
   id: number;
-  moderator: string;
-  date: string;
-  decision: 'approved' | 'rejected' | 'rework';
-  comment?: string;
+  moderatorId: number;
+  moderatorName: string;
+  action: 'approved' | 'rejected' | 'pending';
+  reason: string | null;
+  comment: string;
+  timestamp: string;
 }
 
 export interface AnnouncementDetail {
@@ -50,9 +53,7 @@ export interface ItemState {
   error: string | null;
 }
 
-export interface GetAnnouncementByIdResponse {
-  ad: AnnouncementDetail;
-}
+export type GetAnnouncementByIdResponse = AnnouncementDetail;
 
 export interface UpdateStatusResponse {
   success: boolean;
