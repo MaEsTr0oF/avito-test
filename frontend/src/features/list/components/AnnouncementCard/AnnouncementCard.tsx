@@ -1,18 +1,12 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 import type { Announcement } from '../../type';
+import { formatPrice, formatDate, getStatusLabel, truncateText } from '@/utils';
 import styles from './AnnouncementCard.module.scss';
 
 interface AnnouncementCardProps {
   item: Announcement;
 }
-
-const STATUS_LABELS: Record<string, string> = {
-  pending: 'На модерации',
-  approved: 'Одобрено',
-  rejected: 'Отклонено',
-  draft: 'Черновик',
-};
 
 const AnnouncementCard: FC<AnnouncementCardProps> = ({ item }) => {
   return (
@@ -28,7 +22,7 @@ const AnnouncementCard: FC<AnnouncementCardProps> = ({ item }) => {
           <h3 className={styles.card__title}>{item.title}</h3>
           <div className={styles.card__badges}>
             <span className={`${styles.card__status} ${styles[`card__status--${item.status}`]}`}>
-              {STATUS_LABELS[item.status] || item.status}
+              {getStatusLabel(item.status)}
             </span>
             {item.priority === 'urgent' && (
               <span className={styles.card__priority}>
@@ -39,21 +33,19 @@ const AnnouncementCard: FC<AnnouncementCardProps> = ({ item }) => {
         </div>
 
         <p className={styles.card__description}>
-          {item.description.length > 120
-            ? `${item.description.slice(0, 120)}...`
-            : item.description}
+          {truncateText(item.description, 120)}
         </p>
 
         <div className={styles.card__info}>
           <div className={styles.card__price}>
-            {item.price.toLocaleString('ru-RU')} ₽
+            {formatPrice(item.price)}
           </div>
           <div className={styles.card__category}>{item.category}</div>
         </div>
 
         <div className={styles.card__footer}>
           <span className={styles.card__date}>
-            {new Date(item.createdAt).toLocaleDateString('ru-RU')}
+            {formatDate(item.createdAt)}
           </span>
           <div className={styles.card__seller}>
             <span className={styles.card__sellerName}>{item.seller.name}</span>

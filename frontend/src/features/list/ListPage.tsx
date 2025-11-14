@@ -4,7 +4,8 @@ import { useGetAnnouncementsQuery } from './services';
 import { useDebounce } from '@/hooks/useDebounce';
 import { setPage, resetFilters, selectFilters } from './slice';
 import AnnouncementCard from './components/AnnouncementCard/AnnouncementCard';
-import Filters from './components/Filters/Filters';
+import FiltersBar from './components/FiltersBar/FiltersBar';
+import FiltersSidebar from './components/FiltersSidebar/FiltersSidebar';
 import Pagination from './components/Pagination/Pagination';
 import styles from './list.module.scss';
 
@@ -31,7 +32,7 @@ const ListPage: FC = () => {
   const pagination = data?.pagination;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.wrapper}>
       <header className={styles.header}>
         <h1 className={styles.title}>Модерация объявлений</h1>
         <p className={styles.subtitle}>
@@ -39,7 +40,7 @@ const ListPage: FC = () => {
         </p>
       </header>
 
-      <Filters />
+      <FiltersBar />
 
       {isFetching && !isLoading && (
         <div className={styles.fetchingIndicator}>
@@ -47,48 +48,52 @@ const ListPage: FC = () => {
         </div>
       )}
 
-      <div className={styles.content}>
-        {isLoading ? (
-          <div className={styles.loading}>
-            <div className={styles.spinner}></div>
-            <p>Загрузка объявлений...</p>
-          </div>
-        ) : error ? (
-          <div className={styles.error}>
-            <p>❌ Ошибка при загрузке данных</p>
-            <p className={styles.errorDetails}>
-              Попробуйте обновить страницу или проверьте подключение к серверу
-            </p>
-          </div>
-        ) : announcements.length === 0 ? (
-          <div className={styles.empty}>
-            <p>📭 Объявления не найдены</p>
-            <p className={styles.emptyHint}>
-              Попробуйте изменить параметры фильтрации
-            </p>
-            <button className={styles.resetButton} onClick={() => dispatch(resetFilters())}>
-              Сбросить фильтры
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className={styles.cards}>
-              {announcements.map((item) => (
-                <AnnouncementCard key={item.id} item={item} />
-              ))}
-            </div>
+      <div className={styles.layout}>
+        <FiltersSidebar />
 
-            {pagination && (
-              <Pagination
-                currentPage={pagination.currentPage}
-                totalPages={pagination.totalPages}
-                totalItems={pagination.totalItems}
-                itemsPerPage={pagination.itemsPerPage}
-                onPageChange={(page) => dispatch(setPage(page))}
-              />
-            )}
-          </>
-        )}
+        <main className={styles.main}>
+          {isLoading ? (
+            <div className={styles.loading}>
+              <div className={styles.spinner}></div>
+              <p>Загрузка объявлений...</p>
+            </div>
+          ) : error ? (
+            <div className={styles.error}>
+              <p>❌ Ошибка при загрузке данных</p>
+              <p className={styles.errorDetails}>
+                Попробуйте обновить страницу или проверьте подключение к серверу
+              </p>
+            </div>
+          ) : announcements.length === 0 ? (
+            <div className={styles.empty}>
+              <p>📭 Объявления не найдены</p>
+              <p className={styles.emptyHint}>
+                Попробуйте изменить параметры фильтрации
+              </p>
+              <button className={styles.resetButton} onClick={() => dispatch(resetFilters())}>
+                Сбросить фильтры
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className={styles.cards}>
+                {announcements.map((item) => (
+                  <AnnouncementCard key={item.id} item={item} />
+                ))}
+              </div>
+
+              {pagination && (
+                <Pagination
+                  currentPage={pagination.currentPage}
+                  totalPages={pagination.totalPages}
+                  totalItems={pagination.totalItems}
+                  itemsPerPage={pagination.itemsPerPage}
+                  onPageChange={(page) => dispatch(setPage(page))}
+                />
+              )}
+            </>
+          )}
+        </main>
       </div>
     </div>
   );

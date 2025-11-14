@@ -1,13 +1,8 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-export interface ItemState {
-  item: any | null;
-  loading: boolean;
-  error: string | null;
-}
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { ItemState, AnnouncementDetail } from './type';
 
 const initialState: ItemState = {
-  item: null,
+  currentItem: null,
   loading: false,
   error: null,
 };
@@ -16,8 +11,8 @@ export const itemSlice = createSlice({
   name: 'item',
   initialState,
   reducers: {
-    setItem: (state, action: PayloadAction<any>) => {
-      state.item = action.payload;
+    setCurrentItem: (state, action: PayloadAction<AnnouncementDetail | null>) => {
+      state.currentItem = action.payload;
       state.loading = false;
       state.error = null;
     },
@@ -28,12 +23,30 @@ export const itemSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    clearItem: (state) => {
-      state.item = null;
+    clearCurrentItem: (state) => {
+      state.currentItem = null;
       state.error = null;
+      state.loading = false;
     },
+  },
+  selectors: {
+    selectCurrentItem: (state) => state.currentItem,
+    selectLoading: (state) => state.loading,
+    selectError: (state) => state.error,
   },
 });
 
-export const { setItem, setLoading, setError, clearItem } = itemSlice.actions;
+export const {
+  setCurrentItem,
+  setLoading,
+  setError,
+  clearCurrentItem,
+} = itemSlice.actions;
+
+export const {
+  selectCurrentItem,
+  selectLoading,
+  selectError,
+} = itemSlice.selectors;
+
 export default itemSlice.reducer;

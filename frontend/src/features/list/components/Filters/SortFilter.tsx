@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setSortBy, setSortOrder, selectSortBy, selectSortOrder } from '../../slice';
+import { SORT_OPTIONS, SORT_ORDER_OPTIONS, type SortField, type SortOrder } from '@/constants/announcements';
 import styles from './Filters.module.scss';
 
 const SortFilter: FC = () => {
@@ -9,19 +10,19 @@ const SortFilter: FC = () => {
   const sortOrder = useAppSelector(selectSortOrder);
 
   return (
-    <div className={styles.filters__section}>
-      <h3 className={styles.filters__title}>Сортировка</h3>
-      
+    <>
       <div className={styles.filters__group}>
         <label className={styles.filters__label}>Сортировать по</label>
         <select
           className={styles.filters__select}
           value={sortBy}
-          onChange={(e) => dispatch(setSortBy(e.target.value as 'createdAt' | 'price' | 'priority'))}
+          onChange={(e) => dispatch(setSortBy(e.target.value as SortField))}
         >
-          <option value="createdAt">Дате создания</option>
-          <option value="price">Цене</option>
-          <option value="priority">Приоритету</option>
+          {SORT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -30,13 +31,16 @@ const SortFilter: FC = () => {
         <select
           className={styles.filters__select}
           value={sortOrder}
-          onChange={(e) => dispatch(setSortOrder(e.target.value as 'asc' | 'desc'))}
+          onChange={(e) => dispatch(setSortOrder(e.target.value as SortOrder))}
         >
-          <option value="desc">По убыванию</option>
-          <option value="asc">По возрастанию</option>
+          {SORT_ORDER_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
-    </div>
+    </>
   );
 };
 

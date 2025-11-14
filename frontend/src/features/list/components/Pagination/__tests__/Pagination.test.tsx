@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, userEvent } from '@/test/test-utils';
+import { renderBasic as render, screen, userEvent } from '@/test/test-utils';
 import Pagination from '../Pagination';
 
 describe('Pagination', () => {

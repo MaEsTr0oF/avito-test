@@ -88,7 +88,8 @@ describe('ListPage - Интеграционные тесты', () => {
   it('отображает компонент фильтров', () => {
     renderWithProviders(<ListPage />);
     
-    expect(screen.getByText('Фильтры')).toBeInTheDocument();
+    const filtersElements = screen.getAllByText('Фильтры');
+    expect(filtersElements.length).toBeGreaterThan(0);
     expect(screen.getByPlaceholderText(/введите название/i)).toBeInTheDocument();
   });
 
@@ -154,8 +155,8 @@ describe('ListPage - Интеграционные тесты', () => {
   it('отображает кнопку сброса фильтров', () => {
     renderWithProviders(<ListPage />);
     
-    const resetButtons = screen.getAllByText(/сбросить фильтры/i);
-    expect(resetButtons.length).toBeGreaterThan(0);
+    const resetButton = screen.getByText(/✕ сбросить/i);
+    expect(resetButton).toBeInTheDocument();
   });
 });
 
