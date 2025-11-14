@@ -1,0 +1,100 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--spacing-sm), 2vw, var(--spacing-md));
+  padding: clamp(var(--spacing-sm), 2vw, var(--spacing-lg));
+  background: var(--color-surface);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-sm);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px var(--shadow-md);
+  }
+}
+
+.label {
+  font-size: clamp(13px, 1.5vw, var(--font-size-base));
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.select {
+  padding: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm)) clamp(var(--spacing-sm), 2vw, var(--spacing-lg));
+  font-size: clamp(13px, 1.5vw, var(--font-size-base));
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: clamp(160px, 20vw, 220px);
+
+  &:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .select {
+    min-width: clamp(140px, 18vw, 180px);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .label {
+    text-align: center;
+  }
+
+  .select {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .select {
+    font-size: 13px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .select {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+

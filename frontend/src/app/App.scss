@@ -2,12 +2,10 @@
 @use '../styles/mixins' as *;
 
 #root {
-  max-width: 1920px;
-  margin: 0 auto;
-  padding: $spacing-xl;
-  text-align: center;
-  background-color: color('bg-primary');
-  color: color('text-primary');
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 

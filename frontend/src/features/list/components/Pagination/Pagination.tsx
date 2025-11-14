@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { memo } from 'react';
 import styles from './Pagination.module.scss';
 
 interface PaginationProps {
@@ -9,7 +9,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({
+const Pagination = memo(({
   currentPage,
   totalPages,
   totalItems,
@@ -157,7 +157,9 @@ const Pagination: FC<PaginationProps> = ({
       </div>
     </div>
   );
-};
+});
+
+Pagination.displayName = 'Pagination';
 
 export default Pagination;
 

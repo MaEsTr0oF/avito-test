@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Announcement } from '../../type';
 import { formatPrice, formatDate, getStatusLabel, truncateText } from '@/utils';
@@ -8,7 +8,7 @@ interface AnnouncementCardProps {
   item: Announcement;
 }
 
-const AnnouncementCard: FC<AnnouncementCardProps> = ({ item }) => {
+const AnnouncementCard = memo(({ item }: AnnouncementCardProps) => {
   return (
     <Link to={`/item/${item.id}`} className={styles.card}>
       {item.images && item.images.length > 0 && (
@@ -55,7 +55,9 @@ const AnnouncementCard: FC<AnnouncementCardProps> = ({ item }) => {
       </div>
     </Link>
   );
-};
+});
+
+AnnouncementCard.displayName = 'AnnouncementCard';
 
 export default AnnouncementCard;
 

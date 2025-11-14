@@ -1,61 +1,27 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-export interface SummaryStats {
-  total: number;
-  pending: number;
-  approved: number;
-  rejected: number;
-  averageModerationTime: number;
-}
-
-export interface ChartDataPoint {
-  date: string;
-  value: number;
-}
-
-export interface ActivityChartData {
-  data: ChartDataPoint[];
-}
-
-export interface DecisionsChartData {
-  approved: number;
-  rejected: number;
-  requestedChanges: number;
-}
-
-export interface CategoriesChartData {
-  category: string;
-  count: number;
-}
+import type { StatsResponse, Period } from './type';
+import type { GetAnnouncementsResponse } from '@/features/list/type';
+import { transformAnnouncementsToStats } from './dataAdapter';
 
 export const statsApi = createApi({
   reducerPath: 'statsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/v1' }),
   tagTypes: ['Stats'],
   endpoints: (builder) => ({
-    getSummaryStats: builder.query<SummaryStats, void>({
-      query: () => ({ url: '/stats/summary' }),
-      providesTags: ['Stats'],
-    }),
-    getActivityChart: builder.query<ActivityChartData, void>({
-      query: () => ({ url: '/stats/chart/activity' }),
-      providesTags: ['Stats'],
-    }),
-    getDecisionsChart: builder.query<DecisionsChartData, void>({
-      query: () => ({ url: '/stats/chart/decisions' }),
-      providesTags: ['Stats'],
-    }),
-    getCategoriesChart: builder.query<CategoriesChartData[], void>({
-      query: () => ({ url: '/stats/chart/categories' }),
+    getStats: builder.query<StatsResponse, Period>({
+      query: () => ({
+        url: '/ads',
+        params: {
+          page: 1,
+          limit: 1000,
+        },
+      }),
+      transformResponse: (response: GetAnnouncementsResponse, _meta, period) => {
+        return transformAnnouncementsToStats(response.ads, period);
+      },
       providesTags: ['Stats'],
     }),
   }),
 });
 
-export const {
-  useGetSummaryStatsQuery,
-  useGetActivityChartQuery,
-  useGetDecisionsChartQuery,
-  useGetCategoriesChartQuery,
-} = statsApi;
-
+export const { useGetStatsQuery } = statsApi;

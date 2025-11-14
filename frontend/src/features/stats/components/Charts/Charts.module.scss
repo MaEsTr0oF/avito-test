@@ -1,0 +1,134 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(var(--spacing-lg), 3vw, var(--spacing-2xl));
+}
+
+.chartWrapper {
+  position: relative;
+  height: clamp(300px, 35vh, 450px);
+  padding: clamp(var(--spacing-md), 2.5vw, var(--spacing-xl));
+  background: var(--color-surface);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 4px 12px var(--shadow-sm);
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 8px 24px var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  canvas {
+    max-height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.chartsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr));
+  gap: clamp(var(--spacing-lg), 3vw, var(--spacing-2xl));
+
+  .chartWrapper {
+    height: clamp(280px, 30vh, 380px);
+  }
+}
+
+@media (max-width: 1280px) {
+  .chartWrapper {
+    height: clamp(280px, 32vh, 400px);
+  }
+
+  .chartsRow .chartWrapper {
+    height: clamp(260px, 28vh, 350px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .chartsRow {
+    grid-template-columns: 1fr;
+  }
+
+  .chartWrapper {
+    height: clamp(260px, 30vh, 350px);
+  }
+
+  .chartsRow .chartWrapper {
+    height: clamp(250px, 28vh, 320px);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: var(--spacing-lg);
+  }
+
+  .chartWrapper {
+    height: clamp(240px, 28vh, 300px);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .chartsRow .chartWrapper {
+    height: clamp(230px, 26vh, 280px);
+  }
+}
+
+@media (max-width: 640px) {
+  .chartWrapper {
+    height: clamp(220px, 25vh, 270px);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .chartsRow .chartWrapper {
+    height: clamp(210px, 24vh, 250px);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: var(--spacing-md);
+  }
+
+  .chartWrapper {
+    height: clamp(200px, 22vh, 240px);
+    padding: var(--spacing-sm);
+    border-width: 1px;
+  }
+
+  .chartsRow .chartWrapper {
+    height: clamp(190px, 20vh, 220px);
+  }
+}
+
+@media (max-width: 360px) {
+  .chartWrapper {
+    height: 200px;
+    padding: 8px;
+  }
+
+  .chartsRow .chartWrapper {
+    height: 180px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chartWrapper {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+

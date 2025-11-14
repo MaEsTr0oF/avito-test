@@ -8,30 +8,29 @@ import { createTestStore } from '@/test/test-utils';
 import ItemPage from '../ItemPage';
 
 const mockAnnouncement = {
-  ad: {
+  id: 1,
+  title: 'Тестовое объявление',
+  description: 'Описание тестового объявления',
+  price: 50000,
+  images: ['/test-image.jpg'],
+  categoryId: 0,
+  category: 'Электроника',
+  status: 'pending' as const,
+  priority: 'normal' as const,
+  seller: {
     id: 1,
-    title: 'Тестовое объявление',
-    description: 'Описание тестового объявления',
-    price: 50000,
-    images: ['/test-image.jpg'],
-    categoryId: 0,
-    category: 'Электроника',
-    status: 'pending' as const,
-    priority: 'normal' as const,
-    seller: {
-      name: 'Тестовый продавец',
-      rating: 4.5,
-      totalAds: 10,
-      registrationDate: '2024-01-01',
-    },
-    characteristics: {
-      'Состояние': 'Новое',
-      'Гарантия': '1 год',
-    },
-    moderationHistory: [],
-    createdAt: '2024-01-01',
-    updatedAt: '2024-01-01',
+    name: 'Тестовый продавец',
+    rating: '4.5',
+    totalAds: 10,
+    registeredAt: '2024-01-01',
   },
+  characteristics: {
+    'Состояние': 'Новое',
+    'Гарантия': '1 год',
+  },
+  moderationHistory: [],
+  createdAt: '2024-01-01',
+  updatedAt: '2024-01-01',
 };
 
 const server = setupServer(

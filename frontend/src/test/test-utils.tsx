@@ -5,21 +5,26 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import listReducer from '@features/list/slice';
 import itemReducer from '@features/item/slice';
+import statsReducer from '@features/stats/slice';
 import { announcementsApi } from '@features/list/services';
 import { itemApi } from '@features/item/services';
+import { statsApi } from '@features/stats/services';
 
 export function createTestStore(preloadedState = {}) {
   return configureStore({
     reducer: {
       list: listReducer,
       item: itemReducer,
+      stats: statsReducer,
       [announcementsApi.reducerPath]: announcementsApi.reducer,
       [itemApi.reducerPath]: itemApi.reducer,
+      [statsApi.reducerPath]: statsApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
         announcementsApi.middleware,
-        itemApi.middleware
+        itemApi.middleware,
+        statsApi.middleware
       ),
     preloadedState,
   });

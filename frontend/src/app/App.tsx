@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { store } from '@store/index'
 import { Provider } from 'react-redux'
 import ThemeToggle from '@/components/ThemeToggle'
+import Navigation from '@/components/Navigation'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
 		<Suspense fallback={<div>Loading...</div>}>
 		<Provider store={store}>
+		<Navigation />
 		<ThemeToggle />
 		<Routes >
 			{routes.map((route) => (

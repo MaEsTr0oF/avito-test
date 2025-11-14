@@ -1,35 +1,31 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-export interface StatsState {
-  stats: any[];
-  loading: boolean;
-  error: string | null;
-}
+import { createSlice } from '@reduxjs/toolkit';
+import type { StatsState, Period } from './type';
 
 const initialState: StatsState = {
-  stats: [],
+  metrics: null,
+  chartData: null,
+  period: '7days',
   loading: false,
   error: null,
 };
 
-export const statsSlice = createSlice({
+const statsSlice = createSlice({
   name: 'stats',
   initialState,
   reducers: {
-    setStats: (state, action: PayloadAction<any[]>) => {
-      state.stats = action.payload;
-      state.loading = false;
-      state.error = null;
+    setPeriod: (state, action: { payload: Period }) => {
+      state.period = action.payload;
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-      state.loading = false;
-    },
+  },
+  selectors: {
+    selectPeriod: (state) => state.period,
+    selectMetrics: (state) => state.metrics,
+    selectChartData: (state) => state.chartData,
+    selectLoading: (state) => state.loading,
+    selectError: (state) => state.error,
   },
 });
 
-export const { setStats, setLoading, setError } = statsSlice.actions;
+export const { setPeriod } = statsSlice.actions;
+export const { selectPeriod, selectMetrics, selectChartData, selectLoading, selectError } = statsSlice.selectors;
 export default statsSlice.reducer;

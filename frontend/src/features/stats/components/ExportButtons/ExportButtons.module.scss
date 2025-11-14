@@ -1,0 +1,113 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.container {
+  display: flex;
+  gap: clamp(var(--spacing-sm), 2vw, var(--spacing-md));
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1vw, var(--spacing-sm));
+  padding: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm)) clamp(var(--spacing-md), 2.5vw, var(--spacing-lg));
+  font-size: clamp(12px, 1.5vw, var(--font-size-sm));
+  font-weight: var(--font-weight-semibold);
+  color: white;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-info));
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+  min-height: 40px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 123, 255, 0.4);
+    border-color: var(--color-primary);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.icon {
+  font-size: clamp(16px, 2vw, 18px);
+  flex-shrink: 0;
+}
+
+.text {
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .button {
+    padding: var(--spacing-xs) var(--spacing-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    justify-content: stretch;
+    gap: var(--spacing-sm);
+  }
+
+  .button {
+    flex: 1;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .text {
+    display: none;
+  }
+
+  .icon {
+    font-size: 20px;
+  }
+
+  .button {
+    min-height: 48px;
+    border-radius: var(--border-radius-md);
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    gap: 6px;
+  }
+
+  .button {
+    padding: var(--spacing-xs);
+    min-width: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
