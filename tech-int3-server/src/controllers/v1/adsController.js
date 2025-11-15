@@ -246,10 +246,86 @@ const requestChanges = (req, res) => {
   }
 };
 
+const updateAdStatus = (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, reason } = req.body;
+    
+    if (!status) {
+      return res.status(400).json({
+        error: 'Необходимо указать новый статус'
+      });
+    }
+    
+    const adId = parseInt(id);
+    const ad = dataStore.ads.find(ad => ad.id === adId);
+    
+    if (!ad) {
+      return res.status(404).json({
+        error: 'Объявление не найдено',
+        id: adId
+      });
+    }
+    
+    let action = status;
+    let comment = '';
+    
+    switch (status) {
+      case 'approved':
+        action = 'approved';
+        comment = reason || 'Объявление одобрено модератором';
+        break;
+      case 'rejected':
+        action = 'rejected';
+        comment = reason || 'Объявление не соответствует правилам платформы';
+        break;
+      case 'draft':
+        action = 'pending';
+        comment = reason || 'Требуются изменения в объявлении';
+        break;
+      case 'pending':
+        action = 'pending';
+        comment = reason || 'Объявление на модерации';
+        break;
+      default:
+        return res.status(400).json({
+          error: 'Недопустимый статус',
+          allowedStatuses: ['pending', 'approved', 'rejected', 'draft']
+        });
+    }
+    
+    const historyEntry = {
+      id: ad.moderationHistory.length + 1,
+      moderatorId: dataStore.moderator.id,
+      moderatorName: dataStore.moderator.name,
+      action: action,
+      reason: reason || null,
+      comment: comment,
+      timestamp: new Date().toISOString()
+    };
+    
+    ad.moderationHistory.push(historyEntry);
+    ad.status = status;
+    ad.updatedAt = new Date().toISOString();
+    
+    res.json({
+      success: true,
+      message: `Статус объявления изменен на "${status}"`,
+      ad: ad
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Ошибка при обновлении статуса',
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   getAds,
   getAdById,
   approveAd,
   rejectAd,
-  requestChanges
+  requestChanges,
+  updateAdStatus
 };

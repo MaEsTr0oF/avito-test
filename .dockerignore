@@ -1,0 +1,16 @@
+node_modules
+.git
+.gitignore
+.env
+.env.local
+*.md
+.vscode
+.idea
+*.log
+coverage
+dist
+frontend/node_modules
+frontend/dist
+frontend/coverage
+tech-int3-server/node_modules
+
