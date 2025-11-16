@@ -58,7 +58,7 @@ const Charts = memo(({ data }: ChartsProps) => {
     ],
   };
 
-  const isTestEnv = import.meta.env.MODE === 'test' || process.env.NODE_ENV === 'test';
+  const isTestEnv = import.meta.env.MODE === 'test';
   
   const activityOptions = {
     responsive: !isTestEnv,
@@ -70,7 +70,7 @@ const Charts = memo(({ data }: ChartsProps) => {
         labels: {
           font: {
             size: isMobile ? 11 : isTablet ? 12 : 14,
-            weight: '600' as const,
+            weight: 'bold' as const,
           },
           padding: isMobile ? 8 : isTablet ? 12 : 16,
           boxWidth: isMobile ? 30 : 40,
@@ -148,11 +148,11 @@ const Charts = memo(({ data }: ChartsProps) => {
     plugins: {
       legend: {
         display: true,
-        position: (isMobile ? 'bottom' : 'right') as const,
+        position: (isMobile ? 'bottom' : 'right') as 'bottom' | 'right',
         labels: {
           font: {
             size: isMobile ? 11 : isTablet ? 12 : 14,
-            weight: '600' as const,
+            weight: 'bold' as const,
           },
           padding: isMobile ? 8 : isTablet ? 12 : 16,
           boxWidth: isMobile ? 30 : 40,
@@ -207,7 +207,7 @@ const Charts = memo(({ data }: ChartsProps) => {
         labels: {
           font: {
             size: isMobile ? 11 : isTablet ? 12 : 14,
-            weight: '600' as const,
+            weight: 'bold' as const,
           },
           padding: isMobile ? 8 : isTablet ? 12 : 16,
           boxWidth: isMobile ? 30 : 40,
@@ -264,7 +264,7 @@ const Charts = memo(({ data }: ChartsProps) => {
       opacity: 1,
       scale: 1,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 100,
         damping: 15,
       },

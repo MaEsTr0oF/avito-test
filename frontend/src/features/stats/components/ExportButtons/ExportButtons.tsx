@@ -1,8 +1,9 @@
 import { CSVLink } from 'react-csv';
 import type { MetricsData, ChartData } from '../../type';
 import styles from './ExportButtons.module.scss';
+import type pdfMakeType from 'pdfmake/build/pdfmake';
 
-let pdfMake: any;
+let pdfMake: typeof pdfMakeType | undefined;
 if (typeof window !== 'undefined') {
   import('pdfmake/build/pdfmake').then((module) => {
     pdfMake = module.default;
@@ -189,7 +190,7 @@ const ExportButtons = ({ metrics, chartData, period }: ExportButtonsProps) => {
       },
     };
 
-    pdfMake.createPdf(docDefinition as any).download(`stats_${period}_${new Date().toISOString().split('T')[0]}.pdf`);
+    pdfMake.createPdf(docDefinition).download(`stats_${period}_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   return (
