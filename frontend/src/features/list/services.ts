@@ -6,7 +6,24 @@ export type { Announcement, GetAnnouncementsResponse, GetAnnouncementsParams, Ap
 
 export const announcementsApi = createApi({
   reducerPath: 'announcementsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/v1' }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'http://localhost:3001/api/v1',
+    paramsSerializer: (params) => {
+      const searchParams = new URLSearchParams();
+      
+      Object.entries(params).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        
+        if (Array.isArray(value)) {
+          value.forEach(item => searchParams.append(key, String(item)));
+        } else {
+          searchParams.append(key, String(value));
+        }
+      });
+      
+      return searchParams.toString();
+    }
+  }),
   tagTypes: ['Announcement', 'Announcements'],
   endpoints: (builder) => ({
     getAnnouncements: builder.query<GetAnnouncementsResponse, GetAnnouncementsParams>({
@@ -24,7 +41,7 @@ export const announcementsApi = createApi({
         if (params.priority) queryParams.priority = params.priority;
         
         if (params.status !== undefined) {
-          queryParams.status = Array.isArray(params.status) ? params.status : params.status;
+          queryParams.status = params.status;
         }
         
         return { url: '/ads', params: queryParams };

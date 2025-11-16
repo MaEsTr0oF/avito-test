@@ -1,6 +1,5 @@
-import { type FC, useRef, useEffect } from 'react';
+import { type FC, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useGetAnnouncementsQuery } from './services';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -95,10 +94,24 @@ const ListPage: FC = () => {
     }
   }, [filters, setSearchParams]);
 
-  useHotkeys('/', (event) => {
-    event.preventDefault();
-    filtersBarRef.current?.focusSearch();
-  }, { enableOnFormTags: false });
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === '/') {
+      const target = event.target as HTMLElement;
+      if (target.isContentEditable) {
+        return;
+      }
+      
+      event.preventDefault();
+      filtersBarRef.current?.focusSearch();
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   return (
     <div className={styles.wrapper}>

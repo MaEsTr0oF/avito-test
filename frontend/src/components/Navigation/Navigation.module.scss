@@ -126,15 +126,15 @@
 
 @media (max-width: 768px) {
   .container {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
     min-height: auto;
   }
 
   .brand {
-    width: 100%;
-    justify-content: center;
+    flex: 1;
+    min-width: 200px;
   }
 
   .title {
@@ -146,6 +146,7 @@
   }
 
   .menu {
+    order: 3;
     width: 100%;
     justify-content: center;
   }

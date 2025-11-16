@@ -2,6 +2,7 @@ import { useState, forwardRef, useImperativeHandle } from 'react';
 import Modal from '@/components/Modal';
 import { useUpdateAnnouncementStatusMutation } from '../../services';
 import { REJECT_REASONS } from '@/constants/announcements';
+import { getStatusLabel } from '@/utils/formatters';
 import type { AnnouncementStatus } from '../../type';
 import styles from './ModerationActions.module.scss';
 
@@ -79,20 +80,24 @@ const ModerationActions = forwardRef<ModerationActionsRef, ModerationActionsProp
           className={`${styles.button} ${styles.button_approve}`}
           onClick={handleApprove}
           disabled={isLoading || !isPending}
-          aria-label="Одобрить объявление"
+          aria-label="Одобрить объявление (горячая клавиша A)"
+          title="Горячая клавиша: A"
         >
           <span className={styles.icon}>✓</span>
           Одобрить
+          <span className={styles.hotkey}>A</span>
         </button>
 
         <button
           className={`${styles.button} ${styles.button_reject}`}
           onClick={handleReject}
           disabled={isLoading || !isPending}
-          aria-label="Отклонить объявление"
+          aria-label="Отклонить объявление (горячая клавиша D)"
+          title="Горячая клавиша: D"
         >
           <span className={styles.icon}>✕</span>
           Отклонить
+          <span className={styles.hotkey}>D</span>
         </button>
 
         <button
@@ -106,9 +111,17 @@ const ModerationActions = forwardRef<ModerationActionsRef, ModerationActionsProp
         </button>
       </div>
 
+      {isPending && (
+        <div className={styles.hotkeysHint}>
+          ⌨️ <strong>A</strong> — одобрить, <strong>D</strong> — отклонить
+          <br />
+          <small>Не работают в текстовых полях и модальных окнах</small>
+        </div>
+      )}
+
       {!isPending && (
         <div className={styles.hint}>
-          💡 Объявление уже обработано. Статус: <strong>{currentStatus}</strong>
+          💡 Объявление уже обработано. Статус: <strong>{getStatusLabel(currentStatus)}</strong>
         </div>
       )}
 
@@ -173,4 +186,3 @@ const ModerationActions = forwardRef<ModerationActionsRef, ModerationActionsProp
 ModerationActions.displayName = 'ModerationActions';
 
 export default ModerationActions;
-

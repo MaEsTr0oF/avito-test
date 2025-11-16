@@ -41,6 +41,15 @@
     font-size: clamp(0.7rem, 1.4vw, 0.825rem);
   }
 
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.8rem;
+
+    &::placeholder {
+      font-size: 0.75rem;
+    }
+  }
+
   @media (max-width: 360px) {
     padding: 0.375rem 0.5rem;
     font-size: 0.7rem;

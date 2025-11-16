@@ -1,6 +1,14 @@
 @use './variables' as *;
 
-:root {
+html,
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root,
+[data-theme='light'] {
   --color-primary: #{theme-color($light-theme, 'primary')};
   --color-primary-hover: #{theme-color($light-theme, 'primary-hover')};
   --color-secondary: #{theme-color($light-theme, 'secondary')};

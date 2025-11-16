@@ -1,6 +1,7 @@
 import { forwardRef, useRef, useImperativeHandle } from 'react';
 import SearchFilter from '../Filters/SearchFilter';
 import SortFilter from '../Filters/SortFilter';
+import UrgentToggle from './UrgentToggle';
 import styles from './FiltersBar.module.scss';
 
 export interface FiltersBarRef {
@@ -21,8 +22,11 @@ const FiltersBar = forwardRef<FiltersBarRef>((_, ref) => {
       <div className={styles.filtersBar__search}>
         <SearchFilter ref={searchInputRef} />
       </div>
-      <div className={styles.filtersBar__sort}>
-        <SortFilter />
+      <div className={styles.filtersBar__controls}>
+        <UrgentToggle />
+        <div className={styles.filtersBar__sort}>
+          <SortFilter />
+        </div>
       </div>
     </div>
   );

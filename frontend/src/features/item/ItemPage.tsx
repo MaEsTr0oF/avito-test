@@ -30,14 +30,32 @@ const ItemPage = () => {
     ? announcements[currentIndex + 1]?.id 
     : null;
 
-  useHotkeys('a', () => {
+  useHotkeys('a', (event) => {
+    const target = event.target as HTMLElement;
+    const isInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+    const isInModal = target.closest('[role="dialog"]') !== null;
+    
+    if (isInInput || isInModal) {
+      return;
+    }
+    
     if (moderationActionsRef.current?.handleApprove) {
+      event.preventDefault();
       moderationActionsRef.current.handleApprove();
     }
   }, { enableOnFormTags: false });
 
-  useHotkeys('d', () => {
+  useHotkeys('d', (event) => {
+    const target = event.target as HTMLElement;
+    const isInInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+    const isInModal = target.closest('[role="dialog"]') !== null;
+    
+    if (isInInput || isInModal) {
+      return;
+    }
+    
     if (moderationActionsRef.current?.handleReject) {
+      event.preventDefault();
       moderationActionsRef.current.handleReject();
     }
   }, { enableOnFormTags: false });

@@ -51,7 +51,7 @@ const AnnouncementCard = memo(({ item }: AnnouncementCardProps) => {
             </span>
             {item.priority === 'urgent' && (
               <span className={styles.card__priority}>
-                ⚡ Срочно
+                Срочно
               </span>
             )}
           </div>

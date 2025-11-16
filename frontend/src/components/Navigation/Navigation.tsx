@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import ThemeToggle from '@/components/ThemeToggle';
 import styles from './Navigation.module.scss';
 
 const Navigation = () => {
@@ -34,6 +35,8 @@ const Navigation = () => {
             </NavLink>
           </li>
         </ul>
+
+        <ThemeToggle />
       </div>
     </nav>
   );
