@@ -1,7 +1,9 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { Announcement } from '../../type';
 import { formatPrice, formatDate, getStatusLabel, truncateText } from '@/utils';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { toggleSelectAnnouncement, selectSelectedIds } from '../../slice';
 import styles from './AnnouncementCard.module.scss';
 
 interface AnnouncementCardProps {
@@ -9,8 +11,31 @@ interface AnnouncementCardProps {
 }
 
 const AnnouncementCard = memo(({ item }: AnnouncementCardProps) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const selectedIds = useAppSelector(selectSelectedIds);
+  const isSelected = selectedIds.includes(item.id);
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    dispatch(toggleSelectAnnouncement(item.id));
+  };
+
+  const handleCardClick = () => {
+    navigate(`/item/${item.id}`);
+  };
+
   return (
-    <Link to={`/item/${item.id}`} className={styles.card}>
+    <div className={`${styles.card} ${isSelected ? styles.card_selected : ''}`} onClick={handleCardClick}>
+      <div className={styles.card__checkbox} onClick={(e) => e.stopPropagation()}>
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={handleCheckboxChange}
+          aria-label={`Выбрать объявление ${item.title}`}
+        />
+      </div>
+
       {item.images && item.images.length > 0 && (
         <div className={styles.card__image}>
           <img src={item.images[0]} alt={item.title} />
@@ -53,7 +78,7 @@ const AnnouncementCard = memo(({ item }: AnnouncementCardProps) => {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 });
 

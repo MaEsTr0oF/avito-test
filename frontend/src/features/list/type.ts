@@ -76,6 +76,7 @@ type ListState = {
 	items: Announcement[];
 	loading: boolean;
 	error: string | null;
+	selectedIds: number[];
 	filters: FilterState;
 }
 

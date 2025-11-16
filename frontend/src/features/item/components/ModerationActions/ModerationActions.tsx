@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 import Modal from '@/components/Modal';
 import { useUpdateAnnouncementStatusMutation } from '../../services';
 import { REJECT_REASONS } from '@/constants/announcements';
@@ -11,7 +11,13 @@ interface ModerationActionsProps {
   onSuccess?: () => void;
 }
 
-const ModerationActions = ({ announcementId, currentStatus, onSuccess }: ModerationActionsProps) => {
+export interface ModerationActionsRef {
+  handleApprove: () => void;
+  handleReject: () => void;
+}
+
+const ModerationActions = forwardRef<ModerationActionsRef, ModerationActionsProps>(
+  ({ announcementId, currentStatus, onSuccess }, ref) => {
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [customReason, setCustomReason] = useState('');
@@ -56,6 +62,11 @@ const ModerationActions = ({ announcementId, currentStatus, onSuccess }: Moderat
     }).unwrap();
     onSuccess?.();
   };
+
+  useImperativeHandle(ref, () => ({
+    handleApprove,
+    handleReject,
+  }));
 
   const isPending = currentStatus === 'pending';
 
@@ -157,7 +168,9 @@ const ModerationActions = ({ announcementId, currentStatus, onSuccess }: Moderat
       </Modal>
     </div>
   );
-};
+});
+
+ModerationActions.displayName = 'ModerationActions';
 
 export default ModerationActions;
 

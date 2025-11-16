@@ -12,6 +12,14 @@
   text-decoration: none;
   color: inherit;
   height: 100%;
+  position: relative;
+  cursor: pointer;
+
+  &_selected {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-alpha);
+    background: var(--color-primary-light);
+  }
 
   &:hover {
     transform: translateY(-4px);
@@ -20,6 +28,10 @@
 
     .card__title {
       color: var(--color-primary);
+    }
+
+    .card__checkbox {
+      opacity: 1;
     }
   }
 
@@ -31,6 +43,26 @@
 
   @media (max-width: 360px) {
     border-radius: 0.625rem;
+  }
+
+  &__checkbox {
+    position: absolute;
+    top: clamp(0.5rem, 1vw, 0.75rem);
+    left: clamp(0.5rem, 1vw, 0.75rem);
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+
+    input[type="checkbox"] {
+      width: clamp(1.25rem, 2vw, 1.5rem);
+      height: clamp(1.25rem, 2vw, 1.5rem);
+      cursor: pointer;
+      accent-color: var(--color-primary);
+    }
+  }
+
+  &_selected &__checkbox {
+    opacity: 1;
   }
 
   &__image {

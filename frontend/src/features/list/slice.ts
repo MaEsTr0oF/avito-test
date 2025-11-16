@@ -5,6 +5,7 @@ const initialState: ListState = {
   items: [],
   loading: false,
   error: null,
+  selectedIds: [],
   filters: {
     search: '',
     statuses: [],
@@ -84,6 +85,21 @@ export const listSlice = createSlice({
         limit: 10,
       };
     },
+    toggleSelectAnnouncement: (state, action: PayloadAction<number>) => {
+      const id = action.payload;
+      const index = state.selectedIds.indexOf(id);
+      if (index === -1) {
+        state.selectedIds.push(id);
+      } else {
+        state.selectedIds.splice(index, 1);
+      }
+    },
+    selectAllAnnouncements: (state, action: PayloadAction<number[]>) => {
+      state.selectedIds = action.payload;
+    },
+    clearSelection: (state) => {
+      state.selectedIds = [];
+    },
   },
   selectors: {
     selectFilters: (state) => state.filters,
@@ -97,6 +113,8 @@ export const listSlice = createSlice({
     selectSortOrder: (state) => state.filters.sortOrder,
     selectPage: (state) => state.filters.page,
     selectLimit: (state) => state.filters.limit,
+    selectSelectedIds: (state) => state.selectedIds,
+    selectAnnouncements: (state) => state.items,
   },
 });
 
@@ -114,6 +132,9 @@ export const {
   setSortOrder,
   setPage,
   resetFilters,
+  toggleSelectAnnouncement,
+  selectAllAnnouncements,
+  clearSelection,
 } = listSlice.actions;
 
 export const {
@@ -128,6 +149,8 @@ export const {
   selectSortOrder,
   selectPage,
   selectLimit,
+  selectSelectedIds,
+  selectAnnouncements,
 } = listSlice.selectors;
 
 export default listSlice.reducer;

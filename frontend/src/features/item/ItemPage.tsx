@@ -1,6 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useGetAnnouncementByIdQuery } from './services';
 import { formatPrice, formatDate, getStatusLabel } from '@/utils';
+import { useAppSelector } from '@/store/hooks';
+import { selectAnnouncements } from '../list/slice';
 import ImageGallery from './components/ImageGallery';
 import CharacteristicsTable from './components/CharacteristicsTable';
 import SellerInfo from './components/SellerInfo';
@@ -12,10 +16,43 @@ import styles from './item.module.scss';
 const ItemPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const announcements = useAppSelector(selectAnnouncements);
+  const moderationActionsRef = useRef<{ handleApprove: () => void; handleReject: () => void } | null>(null);
   
   const { data, isLoading, error, refetch } = useGetAnnouncementByIdQuery(Number(id), {
     skip: !id,
   });
+
+  const announcement = data;
+  const currentIndex = announcement ? announcements.findIndex((item) => item.id === announcement.id) : -1;
+  const prevId = currentIndex > 0 ? announcements[currentIndex - 1]?.id : null;
+  const nextId = currentIndex >= 0 && currentIndex < announcements.length - 1 
+    ? announcements[currentIndex + 1]?.id 
+    : null;
+
+  useHotkeys('a', () => {
+    if (moderationActionsRef.current?.handleApprove) {
+      moderationActionsRef.current.handleApprove();
+    }
+  }, { enableOnFormTags: false });
+
+  useHotkeys('d', () => {
+    if (moderationActionsRef.current?.handleReject) {
+      moderationActionsRef.current.handleReject();
+    }
+  }, { enableOnFormTags: false });
+
+  useHotkeys('arrowleft', () => {
+    if (prevId) {
+      navigate(`/item/${prevId}`);
+    }
+  }, { enableOnFormTags: true });
+
+  useHotkeys('arrowright', () => {
+    if (nextId) {
+      navigate(`/item/${nextId}`);
+    }
+  }, { enableOnFormTags: true });
 
   if (isLoading) {
     return (
@@ -44,7 +81,7 @@ const ItemPage = () => {
     );
   }
 
-  if (!data) {
+  if (!announcement) {
     return (
       <div className={styles.container}>
         <div className={styles.empty}>
@@ -56,8 +93,6 @@ const ItemPage = () => {
       </div>
     );
   }
-
-  const announcement = data;
 
   const getStatusClass = (status: string) => {
     switch (status) {
@@ -123,6 +158,7 @@ const ItemPage = () => {
 
         <aside className={styles.sidebar}>
           <ModerationActions
+            ref={moderationActionsRef}
             announcementId={announcement.id}
             currentStatus={announcement.status}
             onSuccess={() => refetch()}
