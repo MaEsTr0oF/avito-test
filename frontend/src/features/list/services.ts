@@ -65,6 +65,27 @@ export const announcementsApi = createApi({
         { type: 'Announcement' as const, id },
       ],
     }),
+    updateAnnouncementStatus: builder.mutation<ApproveRejectResponse, { id: number; status: string; reason?: string; comment?: string }>({
+      query: ({ id, status, reason, comment }) => {
+        if (status === 'approved') {
+          return {
+            url: `/ads/${id}/approve`,
+            method: 'POST',
+          };
+        } else if (status === 'rejected') {
+          return {
+            url: `/ads/${id}/reject`,
+            method: 'POST',
+            body: { reason, ...(comment && { comment }) },
+          };
+        }
+        throw new Error(`Unknown status: ${status}`);
+      },
+      invalidatesTags: (_result, _error, { id }) => [
+        'Announcements',
+        { type: 'Announcement' as const, id },
+      ],
+    }),
   }),
 });
 
@@ -74,4 +95,5 @@ export const {
   useApproveAnnouncementMutation,
   useRejectAnnouncementMutation,
   useRequestChangesMutation,
+  useUpdateAnnouncementStatusMutation,
 } = announcementsApi;
